@@ -16,7 +16,7 @@ const app = express();
 
 // CORS Configuration
 app.use(cors({
-  origin: 'http://localhost:5173',  // React Vite frontend
+  origin: 'http://localhost:5173',  // React Vite frontend (during dev)
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
@@ -26,21 +26,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serve static files from React frontend (production build)
-app.use(express.static(path.join(__dirname, '../frontend/my-react-app/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/my-react-app/dist')));
 
-
-// Routes (API Routes)
+// API Routes
 app.get('/api', (req, res) => {
   res.send('Backend API is working!');
 });
 
-// Serve React app (fallback to index.html)
+// Serve React app (fallback to index.html for all routes)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/my-react-app/index.html'));
+  res.sendFile(path.join(__dirname, 'frontend/my-react-app/dist', 'index.html'));
 });
 
 // Server
-const PORT =  5001;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
