@@ -35,7 +35,7 @@ app.get('/api', (req, res) => {
 
 // Serve React app (fallback to index.html for all routes)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/my-react-app/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'frontend/my-react-app/', 'index.html'));
 });
 
 // Server
